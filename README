@@ -5,3 +5,30 @@ Amanuensis is Scribe (http://github.com/facebook/scribe) but in node js.
 Introduction
 ============
 Amanuensis, just like Scribe, is a server for aggregating log data that's streamed in real time from clients.
+
+Stores:
+
+Type      | Configuration                      | Description
+----------+------------------------------------+-----------------------
+console   | (none)                              | Writes to the console
+
+file      | * path: path to file                | Writes messages to a file.
+
+relay     | * host: host of amanuensis server   | Pushes messages to another amanuensis
+          |                                     | server.
+
+buffering | * max: max messages to buffer       | Buffers messages and then passes
+          | * delegate: store to delegate to    | them down to the delegate store.
+
+Examples:
+
+_Console Store_
+node amanuensis.js '{"type":"console"}'
+
+_File Store_
+node amanuensis.js '{"type":"file","path":"log.txt"}'
+
+_Local File and Buffering Relaying_
+node amanuensis.js \
+    '{"type":"file","path":"log.txt"}' \
+    '{"type":"buffering","max":50,"delegate":{"type":"relay","host":"aggregator"}}'
