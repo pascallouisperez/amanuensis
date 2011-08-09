@@ -1,5 +1,5 @@
 var http = require('http');
-var stores = require('./stores');
+var stores = require('./lib/stores');
 
 var display_store = new stores.DisplayStore();
 
