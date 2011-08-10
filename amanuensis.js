@@ -18,6 +18,11 @@ function object2store(object) {
 		case 'file': return new stores.FileStore(object.path);
 		case 'relay': return new stores.RelayStore(object.host);
 		case 'buffering': return new stores.BufferingStore(object.max, object2store(object.delegate));
+		case 'mongo': return new stores.MongoStore(object.dbName);
+		case 'filtering': return new stores.FilteringStore(
+			object.pattern,
+			object.modifiers,
+			object2store(object.delegate));
 		default: throw new Error("unknown type " + object.type);
 	}
 }

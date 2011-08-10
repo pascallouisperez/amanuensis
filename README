@@ -20,6 +20,10 @@ relay     | * host: host of amanuensis server   | Pushes messages to another ama
 buffering | * max: max messages to buffer       | Buffers messages and then passes
           | * delegate: store to delegate to    | them down to the delegate store.
 
+filtering | * pattern: pattern used to filter   | Filters messages using a regular
+          | * modifiers: pattern modifiers (i/g)| expression and pushes them down to the
+          | * delegate: store to delegate to    | delegate store.
+
 Examples:
 
 _Console Store_
@@ -32,3 +36,7 @@ _Local File and Buffering Relaying_
 node amanuensis.js \
     '{"type":"file","path":"log.txt"}' \
     '{"type":"buffering","max":50,"delegate":{"type":"relay","host":"aggregator"}}'
+
+_Filtering to Console_
+node amanuensis.js \
+    '{"type":"filtering","delegate":{"type":"console"},"pattern":"^\\{.*\\}$","modifiers":"i"}'
